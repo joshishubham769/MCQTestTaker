@@ -68,7 +68,12 @@ Please ensure:
 1. "time" is a number representing duration in hours (e.g., 0.5 for 30 minutes, 1 for 1 hour).
 2. "marking" has "correct" (positive marks) and "incorrect" (negative penalty as a negative number or 0).
 3. Each question must have 4 options numbered 1 to 4 and a "correctOptionNumber".
-4. Ensure valid JSON syntax without trailing commas.`;
+4. Ensure valid JSON syntax without trailing commas.
+
+Topic: <Topic Name>
+Difficulty Level: <Difficulty Level>
+Time: <Time>
+Marking: <Marking>`;
 }
 
 export function downloadSampleTemplate(): void {
