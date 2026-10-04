@@ -1,0 +1,60 @@
+{
+	"title": "General Knowledge Test"
+	"totalQuestions": 2,
+	"marking":{
+		"correct": 1,
+		"incorrect": -0.25
+	},
+	"time": 3,
+	"questions": [
+		{
+			"questionNumber":1,
+			"questionString": "What is the capitol of france?"
+			"options":[
+				{
+					"optionNumber": 1,
+					"optionString": "Paris"
+				},
+				{
+					"optionNumer": 2,
+					"optionString": "Delhi"
+				},
+				{
+					"optionNumber": 3,
+					"optionString": "New York"
+				},
+				{
+					"optionNumber": 4,
+					"optionString": "Chandigarh"
+				}
+
+			],
+			"correctOptionNumber": 1
+		},
+		{
+			"questionNumber":1,
+			"questionString": "Most populated city?"
+			"options":[
+				{
+					"optionNumber": 1,
+					"optionString": "Paris"
+				},
+				{
+					"optionNumer": 2,
+					"optionString": "Delhi"
+				},
+				{
+					"optionNumber": 3,
+					"optionString": "New York"
+				},
+				{
+					"optionNumber": 4,
+					"optionString": "Tokyo"
+				}
+
+			],
+			"correctOptionNumber": 4
+		}
+	]
+
+}
