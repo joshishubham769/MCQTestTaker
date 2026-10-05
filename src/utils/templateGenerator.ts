@@ -39,7 +39,7 @@ export function getSampleQuizJson(): string {
 }
 
 export function getGenAiPrompt(): string {
-  return `Generate a valid JSON object for an MCQ test formatted strictly according to the following structure:
+  return `Generate a copy pastable valid JSON object for an MCQ test formatted strictly according to the following structure:
 
 {
   "title": "Your Custom Quiz Title Here",
@@ -69,9 +69,12 @@ Please ensure:
 2. "marking" has "correct" (positive marks) and "incorrect" (negative penalty as a negative number or 0).
 3. Each question must have 4 options numbered 1 to 4 and a "correctOptionNumber".
 4. Ensure valid JSON syntax without trailing commas.
+5. Stick to the below given details. For the missing information invent the details - related to topic, difficulty, number of questions, time, and marking appropriately as needed - if not given.
 
 Topic: <Topic Name>
+Detailed Description: <How questions you want to be is it exam related, depth or subtopics>
 Difficulty Level: <Difficulty Level>
+Number of Questions: <Number of Questions>
 Time: <Time>
 Marking: <Marking>`;
 }
