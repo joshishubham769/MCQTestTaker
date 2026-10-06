@@ -29,6 +29,14 @@ export const RichText: React.FC<RichTextProps> = ({ content, className = '' }) =
               {children}
             </sup>
           ),
+          img: ({ src, alt }) => (
+            <img
+              src={src}
+              alt={alt || 'Question Diagram'}
+              className="max-w-full h-auto max-h-96 rounded-xl border border-slate-200 shadow-sm my-3 mx-auto object-contain block bg-slate-50 p-1"
+              loading="lazy"
+            />
+          ),
           code: ({ className, children, ...props }: any) => {
             const isInline = !className && !String(children).includes('\n');
             if (isInline) {

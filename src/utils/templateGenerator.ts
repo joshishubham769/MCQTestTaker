@@ -1,7 +1,7 @@
 export function getSampleQuizJson(): string {
   return JSON.stringify(
     {
-      title: "Coordination Compounds - Class 12 NEET Test",
+      title: "Coordination Compounds & Diagrams Test",
       totalQuestions: 2,
       marking: {
         correct: 4,
@@ -22,7 +22,7 @@ export function getSampleQuizJson(): string {
         },
         {
           questionNumber: 2,
-          questionString: "The geometry of [Ni(CN)<sub>4</sub>]<sup>2−</sup> is generally:",
+          questionString: "The geometry of [Ni(CN)<sub>4</sub>]<sup>2−</sup> is generally:\n![Structure](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Square_planar_complex_representation.svg/240px-Square_planar_complex_representation.svg.png)",
           options: [
             { optionNumber: 1, optionString: "Tetrahedral" },
             { optionNumber: 2, optionString: "Square planar" },
@@ -52,7 +52,7 @@ export function getGenAiPrompt(): string {
   "questions": [
     {
       "questionNumber": 1,
-      "questionString": "Write the question prompt here. You can use **Markdown** OR **HTML tags** like <sub>subscripts</sub>, <sup>superscripts</sup>, <strong>bold</strong>, <em>italics</em>, \`code\`, etc.",
+      "questionString": "Write the question prompt here. You can use **Markdown**, **HTML tags** (<sub>, <sup>, <strong>), OR **Image URLs** (e.g. ![Diagram Alt Text](https://example.com/diagram.png) or <img src=\"https://example.com/diagram.png\" />).",
       "options": [
         { "optionNumber": 1, "optionString": "Option A (e.g., NH<sub>3</sub> or Cl<sup>−</sup>)" },
         { "optionNumber": 2, "optionString": "Option B" },
@@ -65,7 +65,7 @@ export function getGenAiPrompt(): string {
 }
 
 Please ensure:
-1. Formatting: Use HTML tags (<sub>, <sup>, <strong>, <em>, <code>) OR Markdown syntax (**bold**, *italics*, \`code\`) inside "questionString" and "optionString" for chemical formulas, math, and rich text.
+1. Formatting: Use HTML tags (<sub>, <sup>, <strong>), Markdown (**bold**, \`code\`), or Image URLs (![alt](https://...) or <img src=\"...\">) inside "questionString" and "optionString" for chemical formulas, diagrams, and rich content.
 2. "time" is a number representing duration in hours (e.g., 0.1667 for 10 minutes, 0.5 for 30 minutes, 1 for 1 hour).
 3. "marking" has "correct" (positive marks) and "incorrect" (negative penalty as a negative number or 0).
 4. Each question must have 4 options numbered 1 to 4 and a "correctOptionNumber".
