@@ -1,28 +1,28 @@
 export function getSampleQuizJson(): string {
   return JSON.stringify(
     {
-      title: "General Knowledge Test",
+      title: "General Knowledge & Tech Test",
       totalQuestions: 2,
       marking: {
         correct: 1,
         incorrect: -0.25
       },
-      time: 0.1, // 0.1 hrs = 6 mins (convenient for testing)
+      time: 0.1, // 0.1 hrs = 6 mins
       questions: [
         {
           questionNumber: 1,
-          questionString: "What is the capital of France?",
+          questionString: "What is the output of the following JavaScript snippet?\n```javascript\nconsole.log(typeof NaN);\n```",
           options: [
-            { optionNumber: 1, optionString: "Paris" },
-            { optionNumber: 2, optionString: "Delhi" },
-            { optionNumber: 3, optionString: "New York" },
-            { optionNumber: 4, optionString: "Chandigarh" }
+            { optionNumber: 1, optionString: "`'number'`" },
+            { optionNumber: 2, optionString: "`'NaN'`" },
+            { optionNumber: 3, optionString: "`'undefined'`" },
+            { optionNumber: 4, optionString: "`'object'`" }
           ],
           correctOptionNumber: 1
         },
         {
           questionNumber: 2,
-          questionString: "Which city is currently considered the most populated city in the world by urban area?",
+          questionString: "Which city is currently considered the **most populated city** in the world by urban area?",
           options: [
             { optionNumber: 1, optionString: "Paris" },
             { optionNumber: 2, optionString: "Delhi" },
@@ -39,7 +39,7 @@ export function getSampleQuizJson(): string {
 }
 
 export function getGenAiPrompt(): string {
-  return `Generate a copy pastable valid JSON object for an MCQ test formatted strictly according to the following structure:
+  return `Generate a valid JSON object for an MCQ test formatted strictly according to the following structure:
 
 {
   "title": "Your Custom Quiz Title Here",
@@ -52,9 +52,9 @@ export function getGenAiPrompt(): string {
   "questions": [
     {
       "questionNumber": 1,
-      "questionString": "Write the question prompt here",
+      "questionString": "Write the question prompt here. You can use **Markdown rich text** formatting like **bold text**, *italics*, \`inline code\`, code blocks, lists, etc.",
       "options": [
-        { "optionNumber": 1, "optionString": "Option A" },
+        { "optionNumber": 1, "optionString": "Option A (Markdown supported: e.g. \`code\` or **bold**)" },
         { "optionNumber": 2, "optionString": "Option B" },
         { "optionNumber": 3, "optionString": "Option C" },
         { "optionNumber": 4, "optionString": "Option D" }
@@ -65,18 +65,11 @@ export function getGenAiPrompt(): string {
 }
 
 Please ensure:
-1. "time" is a number representing duration in hours (e.g., 0.5 for 30 minutes, 1 for 1 hour).
-2. "marking" has "correct" (positive marks) and "incorrect" (negative penalty as a negative number or 0).
-3. Each question must have 4 options numbered 1 to 4 and a "correctOptionNumber".
-4. Ensure valid JSON syntax without trailing commas.
-5. Stick to the below given details. For the missing information invent the details - related to topic, difficulty, number of questions, time, and marking appropriately as needed - if not given.
-
-Topic: <Topic Name>
-Detailed Description: <How questions you want to be is it exam related, depth or subtopics>
-Difficulty Level: <Difficulty Level>
-Number of Questions: <Number of Questions>
-Time: <Time>
-Marking: <Marking>`;
+1. Formatting: Use Markdown rich text inside "questionString" and "optionString" whenever helpful (e.g., **bold** key terms, \`code snippets\`, code blocks \`\`\`lang ... \`\`\`, bullet points).
+2. "time" is a number representing duration in hours (e.g., 0.5 for 30 minutes, 1 for 1 hour).
+3. "marking" has "correct" (positive marks) and "incorrect" (negative penalty as a negative number or 0).
+4. Each question must have 4 options numbered 1 to 4 and a "correctOptionNumber".
+5. Ensure valid JSON syntax without trailing commas. Escaped newlines in strings must be \\n.`;
 }
 
 export function downloadSampleTemplate(): void {

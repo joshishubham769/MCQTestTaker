@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { QuizConfig, QuizAnswersMap, TestResultMetrics } from '../types/quiz';
 import { formatTimeTaken } from '../utils/scoring';
 import confetti from 'canvas-confetti';
+import { RichText } from './RichText';
 import { 
   Trophy, 
   Clock, 
@@ -192,10 +193,10 @@ export const ResultPage: React.FC<ResultPageProps> = ({
                   </span>
                 </div>
 
-                {/* Question Prompt */}
-                <h4 className="text-base sm:text-lg font-bold text-slate-800 leading-snug mb-4">
-                  {q.questionString}
-                </h4>
+                {/* Question Prompt (RichText) */}
+                <div className="text-base sm:text-lg font-bold text-slate-800 leading-snug mb-4">
+                  <RichText content={q.questionString} />
+                </div>
 
                 {/* Options Review Grid */}
                 <div className="space-y-2.5">
@@ -203,20 +204,13 @@ export const ResultPage: React.FC<ResultPageProps> = ({
                     const isUserChoice = savedOpt === opt.optionNumber;
                     const isCorrectAnswer = q.correctOptionNumber === opt.optionNumber;
 
-                    // Style decision logic as specified in requirements:
-                    // Correct answer option highlighted in GREEN
-                    // Incorrect user choice option highlighted in RED
-                    // Unattempted: no option highlighted, but correct answer subtly indicated
                     let optionStyle = 'bg-slate-50 border-slate-200 text-slate-700';
 
                     if (isUserChoice && isCorrectAnswer) {
-                      // Attempted & Correct -> GREEN
                       optionStyle = 'bg-emerald-100 border-2 border-emerald-500 text-emerald-950 font-bold';
                     } else if (isUserChoice && !isCorrectAnswer) {
-                      // Attempted & Incorrect -> RED
                       optionStyle = 'bg-rose-100 border-2 border-rose-500 text-rose-950 font-bold';
                     } else if (!isUserChoice && isCorrectAnswer) {
-                      // Correct option for incorrect or unattempted questions -> GREEN outline/accent
                       optionStyle = 'bg-emerald-50 border-2 border-emerald-400 text-emerald-900 font-semibold';
                     }
 
@@ -225,11 +219,13 @@ export const ResultPage: React.FC<ResultPageProps> = ({
                         key={opt.optionNumber}
                         className={`p-3.5 rounded-xl border flex items-center justify-between text-sm transition ${optionStyle}`}
                       >
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-3 flex-1">
                           <span className="w-6 h-6 rounded-md bg-white/80 text-slate-800 text-xs font-bold flex items-center justify-center flex-shrink-0 shadow-xs border border-slate-200">
                             {String.fromCharCode(64 + opt.optionNumber)}
                           </span>
-                          <span className="leading-snug">{opt.optionString}</span>
+                          <div className="leading-snug flex-1">
+                            <RichText content={opt.optionString} />
+                          </div>
                         </div>
 
                         {/* Status Label Badges */}

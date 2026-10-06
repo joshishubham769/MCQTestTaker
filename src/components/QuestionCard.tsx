@@ -1,6 +1,7 @@
 import React from 'react';
 import { Question, QuestionAnswerState } from '../types/quiz';
 import { Flag, Save, ArrowRight, CheckCircle } from 'lucide-react';
+import { RichText } from './RichText';
 
 interface QuestionCardProps {
   question: Question;
@@ -53,10 +54,10 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
       {/* Scrollable Question Content Body */}
       <div className="p-6 sm:p-8 overflow-y-auto flex-1 max-h-[calc(100vh-16rem)]">
-        {/* Question String */}
-        <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-relaxed mb-6">
-          {question.questionString}
-        </h3>
+        {/* Question String (Rendered with RichText Markdown support) */}
+        <div className="text-lg sm:text-xl font-bold text-slate-900 leading-relaxed mb-6">
+          <RichText content={question.questionString} />
+        </div>
 
         {/* 4 Radio Buttons for Options */}
         <div className="space-y-3.5">
@@ -93,13 +94,13 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                   {String.fromCharCode(64 + opt.optionNumber)}
                 </span>
 
-                {/* Option Text */}
-                <span className="text-slate-800 font-medium text-sm sm:text-base flex-1 leading-normal">
-                  {opt.optionString}
-                </span>
+                {/* Option Text (RichText) */}
+                <div className="text-slate-800 font-medium text-sm sm:text-base flex-1 leading-normal">
+                  <RichText content={opt.optionString} />
+                </div>
 
                 {isOptionSaved && (
-                  <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                  <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded flex-shrink-0">
                     Saved Answer
                   </span>
                 )}
