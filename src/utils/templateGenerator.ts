@@ -69,7 +69,14 @@ Please ensure:
 2. "time" is a number representing duration in hours (e.g., 0.5 for 30 minutes, 1 for 1 hour).
 3. "marking" has "correct" (positive marks) and "incorrect" (negative penalty as a negative number or 0).
 4. Each question must have 4 options numbered 1 to 4 and a "correctOptionNumber".
-5. Ensure valid JSON syntax without trailing commas. Escaped newlines in strings must be \\n.`;
+5. Ensure valid JSON syntax without trailing commas. Escaped newlines in strings must be \\n.
+
+Topic: <Topic Name>
+Detailed Description: <How questions you want to be is it exam related, depth or subtopics>
+Difficulty Level: <Difficulty Level>
+Number of Questions: <Number of Questions>
+Time: <Time>
+Marking: <Marking>`;
 }
 
 export function downloadSampleTemplate(): void {
