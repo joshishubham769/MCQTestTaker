@@ -44,28 +44,25 @@ export function getGenAiPrompt(): string {
 {
   "title": "Your Custom Quiz Title Here",
   "totalQuestions": 3,
-  "marking": {
-    "correct": 4,
-    "incorrect": -1
-  },
+  "marking": { "correct": 4, "incorrect": -1 },
   "time": 0.5,
   "questions": [
     {
       "questionNumber": 1,
-      "questionString": "Write the question prompt here. You can use **Markdown**, **HTML tags** (<sub>, <sup>, <strong>), OR **Image URLs** (e.g. ![Diagram Alt Text](https://example.com/diagram.png) or <img src=\"https://example.com/diagram.png\" />).",
+      "questionString": "What is the oxidation state of Co in [Co(NH<sub>3</sub>)<sub>5</sub>Cl]Cl<sub>2</sub>? Use <strong>bold</strong>, <em>italics</em>, or <code>code</code> for formatting.",
       "options": [
-        { "optionNumber": 1, "optionString": "Option A (e.g., NH<sub>3</sub> or Cl<sup>−</sup>)" },
-        { "optionNumber": 2, "optionString": "Option B" },
-        { "optionNumber": 3, "optionString": "Option C" },
-        { "optionNumber": 4, "optionString": "Option D" }
+        { "optionNumber": 1, "optionString": "NH<sub>3</sub>" },
+        { "optionNumber": 2, "optionString": "Cl<sup>−</sup>" },
+        { "optionNumber": 3, "optionString": "en (ethylenediamine)" },
+        { "optionNumber": 4, "optionString": "CN<sup>−</sup>" }
       ],
-      "correctOptionNumber": 1
+      "correctOptionNumber": 3
     }
   ]
 }
 
 Please ensure:
-1. Formatting: Use HTML tags (<sub>, <sup>, <strong>), Markdown (**bold**, \`code\`), or Image URLs (![alt](https://...) or <img src=\"...\">) inside "questionString" and "optionString" for chemical formulas, diagrams, and rich content.
+1. Formatting: Use HTML tags ONLY (e.g. <strong>bold</strong>, <em>italics</em>, <code>inline code</code>, <pre><code>code blocks</code></pre>, <sub>subscript</sub>, <sup>superscript</sup>, <img src="URL" />) inside "questionString" and "optionString" for chemical formulas, diagrams, and formatted text.
 2. "time" is a number representing duration in hours (e.g., 0.1667 for 10 minutes, 0.5 for 30 minutes, 1 for 1 hour).
 3. "marking" has "correct" (positive marks) and "incorrect" (negative penalty as a negative number or 0).
 4. Each question must have 4 options numbered 1 to 4 and a "correctOptionNumber".
