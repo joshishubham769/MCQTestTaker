@@ -5,13 +5,21 @@ import { QuizConfig, Question, Option } from '../types/quiz';
  */
 export function parseQuizJson(rawInput: string): QuizConfig {
   let parsed: any;
-  
-  // 1. Attempt standard JSON parse first
+  let cleanInput = rawInput.trim();
+
+  // 1. Extract JSON object substring between first '{' and last '}' to ignore trailing comments
+  const firstBrace = cleanInput.indexOf('{');
+  const lastBrace = cleanInput.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace > firstBrace) {
+    cleanInput = cleanInput.substring(firstBrace, lastBrace + 1);
+  }
+
+  // 2. Attempt standard JSON parse first
   try {
-    parsed = JSON.parse(rawInput);
+    parsed = JSON.parse(cleanInput);
   } catch (err) {
-    // 2. Fallback: attempt lightweight auto-repair for common JSON format bugs (e.g. missing commas between lines)
-    const sanitized = sanitizeJsonString(rawInput);
+    // 3. Fallback: attempt lightweight auto-repair for common LLM JSON syntax bugs
+    const sanitized = sanitizeJsonString(cleanInput);
     try {
       parsed = JSON.parse(sanitized);
     } catch (secondErr: any) {
@@ -57,7 +65,7 @@ export function parseQuizJson(rawInput: string): QuizConfig {
 
       const optStr = typeof opt.optionString === 'string' 
         ? opt.optionString 
-        : (typeof opt.optionText === 'string' ? opt.optionText : `Option ${optIndex + 1}`);
+        : (typeof opt.optionText === 'string' ? String(opt.optionText) : `Option ${optIndex + 1}`);
 
       return {
         optionNumber: optNum,
@@ -90,15 +98,23 @@ export function parseQuizJson(rawInput: string): QuizConfig {
 }
 
 /**
- * Auto-corrects common hand-written JSON errors such as missing commas between fields
+ * Auto-corrects common hand-written or LLM JSON syntax errors
  */
 function sanitizeJsonString(jsonStr: string): string {
+  let cleaned = jsonStr;
+
+  // Fix missing opening quote for property string values starting with backtick
+  // e.g. "optionString": `Cl−`"  ==>  "optionString": "`Cl−`"
+  cleaned = cleaned.replace(/"(optionString|questionString|title)"\s*:\s*`([^"]+)`"/g, '"$1": "`$2`"');
+  cleaned = cleaned.replace(/:\s*`([^"`]+)`"/g, ': "`$1`"');
+
   // Add missing comma between string property and next key
-  let cleaned = jsonStr.replace(/"\s*\n\s*"/g, '",\n"');
+  cleaned = cleaned.replace(/"\s*\n\s*"/g, '",\n"');
   // Add missing comma between number/boolean property and next key
   cleaned = cleaned.replace(/(\d+)\s*\n\s*"/g, '$1,\n"');
   cleaned = cleaned.replace(/(true|false)\s*\n\s*"/g, '$1,\n"');
   // Add missing comma between closing brace/bracket and next key
-  cleaned = cleaned.replace(/([\ rulemaking}]+)\s*\n\s*"/g, '$1,\n"');
+  cleaned = cleaned.replace(/([\}\]])\s*\n\s*"/g, '$1,\n"');
+
   return cleaned;
 }
