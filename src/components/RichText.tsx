@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 interface RichTextProps {
   content: string;
@@ -12,11 +13,22 @@ export const RichText: React.FC<RichTextProps> = ({ content, className = '' }) =
   return (
     <div className={`rich-text-content ${className}`}>
       <ReactMarkdown
+        rehypePlugins={[rehypeRaw]}
         components={{
-          // Customize element styling for clean MCQ presentation
-          p: ({ children }) => <p className="mb-2 last:mb-0 inline-block">{children}</p>,
+          // Render HTML & Markdown elements cleanly
+          p: ({ children }) => <p className="mb-2 last:mb-0 inline-block leading-relaxed">{children}</p>,
           strong: ({ children }) => <strong className="font-extrabold text-slate-900">{children}</strong>,
           em: ({ children }) => <em className="italic">{children}</em>,
+          sub: ({ children }) => (
+            <sub className="text-[0.75em] leading-none align-baseline relative -bottom-[0.2em] font-semibold">
+              {children}
+            </sub>
+          ),
+          sup: ({ children }) => (
+            <sup className="text-[0.75em] leading-none align-baseline relative -top-[0.4em] font-semibold">
+              {children}
+            </sup>
+          ),
           code: ({ className, children, ...props }: any) => {
             const isInline = !className && !String(children).includes('\n');
             if (isInline) {
