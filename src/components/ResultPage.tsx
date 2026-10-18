@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { QuizConfig, QuizAnswersMap, TestResultMetrics } from '../types/quiz';
 import { formatTimeTaken } from '../utils/scoring';
+import { downloadResultAsHtml, printResultPage } from '../utils/resultExporter';
 import confetti from 'canvas-confetti';
 import { RichText } from './RichText';
 import { 
@@ -11,7 +12,9 @@ import {
   Target, 
   RotateCcw, 
   HelpCircle,
-  Award
+  Award,
+  Download,
+  Printer
 } from 'lucide-react';
 
 interface ResultPageProps {
@@ -37,6 +40,14 @@ export const ResultPage: React.FC<ResultPageProps> = ({
       });
     }
   }, [metrics]);
+
+  const handleDownload = () => {
+    downloadResultAsHtml(quizConfig, answersMap, metrics);
+  };
+
+  const handlePrint = () => {
+    printResultPage();
+  };
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 sm:py-12">
@@ -127,11 +138,29 @@ export const ResultPage: React.FC<ResultPageProps> = ({
           </div>
         </div>
 
-        {/* Action Button */}
-        <div className="p-4 sm:p-6 bg-white flex justify-center">
+        {/* Top Action Toolbar */}
+        <div className="p-4 sm:p-6 bg-white flex flex-wrap items-center justify-center gap-3 no-print">
+          <button
+            onClick={handleDownload}
+            className="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition flex items-center space-x-2 cursor-pointer"
+            title="Download complete results as a standalone, offline HTML file"
+          >
+            <Download className="w-5 h-5" />
+            <span>Download HTML Report</span>
+          </button>
+
+          <button
+            onClick={handlePrint}
+            className="px-5 py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition flex items-center space-x-2 cursor-pointer"
+            title="Print or Save as PDF"
+          >
+            <Printer className="w-5 h-5" />
+            <span>Print / Save PDF</span>
+          </button>
+
           <button
             onClick={onReset}
-            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition flex items-center space-x-2"
+            className="px-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition flex items-center space-x-2 cursor-pointer"
           >
             <RotateCcw className="w-5 h-5" />
             <span>Take Another Test</span>
@@ -157,7 +186,7 @@ export const ResultPage: React.FC<ResultPageProps> = ({
             return (
               <div
                 key={q.questionNumber}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 overflow-hidden"
+                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 overflow-hidden print-avoid-break"
               >
                 {/* Question Review Header */}
                 <div className="flex items-center justify-between mb-4">
@@ -252,6 +281,35 @@ export const ResultPage: React.FC<ResultPageProps> = ({
               </div>
             );
           })}
+        </div>
+
+        {/* Bottom Action Toolbar */}
+        <div className="mt-8 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-center gap-3 no-print">
+          <button
+            onClick={handleDownload}
+            className="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition flex items-center space-x-2 cursor-pointer"
+            title="Download complete results as a standalone, offline HTML file"
+          >
+            <Download className="w-5 h-5" />
+            <span>Download HTML Report</span>
+          </button>
+
+          <button
+            onClick={handlePrint}
+            className="px-5 py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition flex items-center space-x-2 cursor-pointer"
+            title="Print or Save as PDF"
+          >
+            <Printer className="w-5 h-5" />
+            <span>Print / Save PDF</span>
+          </button>
+
+          <button
+            onClick={onReset}
+            className="px-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition flex items-center space-x-2 cursor-pointer"
+          >
+            <RotateCcw className="w-5 h-5" />
+            <span>Take Another Test</span>
+          </button>
         </div>
       </div>
     </div>

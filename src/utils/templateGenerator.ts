@@ -22,7 +22,7 @@ export function getSampleQuizJson(): string {
         },
         {
           questionNumber: 2,
-          questionString: "The geometry of [Ni(CN)<sub>4</sub>]<sup>2−</sup> is generally:\n![Structure](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Square_planar_complex_representation.svg/240px-Square_planar_complex_representation.svg.png)",
+          questionString: "The geometry of [Ni(CN)<sub>4</sub>]<sup>2−</sup> is generally:<br/><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Square_planar_complex_representation.svg/240px-Square_planar_complex_representation.svg.png\" alt=\"Square Planar Structure\" />",
           options: [
             { optionNumber: 1, optionString: "Tetrahedral" },
             { optionNumber: 2, optionString: "Square planar" },
