@@ -9,12 +9,14 @@ export function downloadResultAsHtml(
   answersMap: QuizAnswersMap,
   metrics: TestResultMetrics
 ): void {
-  const attemptDate = new Date().toLocaleString(undefined, {
+  const now = new Date();
+  const attemptDate = now.toLocaleString(undefined, {
     dateStyle: 'medium',
     timeStyle: 'short',
   });
 
   const sanitizedTitle = quizConfig.title.replace(/[^a-zA-Z0-9_\- ]/g, '').replace(/\s+/g, '_') || 'Quiz';
+  const dateSuffix = formatDateForFilename(now);
 
   // Helper to escape raw text if needed or format markdown bold/code
   const formatContent = (content: string): string => {
@@ -463,7 +465,7 @@ export function downloadResultAsHtml(
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;
-  anchor.download = `${sanitizedTitle}_Result.html`;
+  anchor.download = `${sanitizedTitle}_Result_${dateSuffix}.html`;
   document.body.appendChild(anchor);
   anchor.click();
   document.body.removeChild(anchor);
@@ -475,6 +477,14 @@ export function downloadResultAsHtml(
  */
 export function printResultPage(): void {
   window.print();
+}
+
+function formatDateForFilename(date: Date): string {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day}_${month}_${year}`;
 }
 
 function escapeHtml(str: string): string {
